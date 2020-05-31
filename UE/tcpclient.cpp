@@ -4,14 +4,13 @@
 
 TcpClient::TcpClient(QObject *parent) : QObject(parent)
 {
-
-}
-void TcpClient::connectTo(const QString &hostname, int port)
-{
     tcpSocket = new QTcpSocket(this);
     connect(tcpSocket,&QTcpSocket::readyRead,this, &TcpClient::readSocket);
     connect(tcpSocket,&QTcpSocket::disconnected,this,&TcpClient::discardSocket);
+}
 
+void TcpClient::connectTo(const QString &hostname, int port)
+{
     tcpSocket->connectToHost(hostname,port);
 
     if(!tcpSocket->waitForConnected())
