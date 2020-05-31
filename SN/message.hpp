@@ -4,7 +4,7 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 
-
+enum MESSAGE_TYPE{SgNBAdditionalRequest_t,SgNBAdditionalRequestAcknowledge_t,SgNBReconfigurationComplete_t,RRCConnectionReconfiguration_t,RRCConnectionReconfigurationComplete_t};
 // SgNBAdditionalRequest message
 struct PDCP_not_present_in_SN {
     QString Requested_SCG_E_RAB_Level_QoS_Parameters{"dummy"};
@@ -274,9 +274,51 @@ struct SgNBReconfigurationComplete {
     }
 };
 
+struct RRCConnectionReconfiguration
+{
+    QString Message_Type{"dummy"};
+    QJsonObject toJson()
+    {
+        QJsonObject obj;
+        obj["Message_Type"] = Message_Type;
+        return obj;
+    }
+};
+
+struct RRCConnectionReconfigurationComplete
+{
+    QString Message_Type{"dummy"};
+    QJsonObject toJson()
+    {
+        QJsonObject obj;
+        obj["Message_Type"] = Message_Type;
+        return obj;
+    }
+};
+
 class Message{
 
+
 public:
+
+    static MESSAGE_TYPE getMessageType(QString json)
+    {
+        SgNBAdditionalRequest ret;
+        QJsonDocument jsonResponse = QJsonDocument::fromJson(json.toUtf8());
+        QJsonObject jsonObject = jsonResponse.object();
+        ret.Message_Type = jsonObject["Message_Type"].toString();
+        if(ret.Message_Type == "SgNBAdditionalRequest")
+            return SgNBAdditionalRequest_t;
+        else if(ret.Message_Type == "SgNBAdditionalRequestAcknowledge")
+            return SgNBAdditionalRequestAcknowledge_t;
+        else if(ret.Message_Type == "RRCConnectionReconfiguration")
+            return RRCConnectionReconfiguration_t;
+        else if(ret.Message_Type == "RRCConnectionReconfigurationComplete")
+            return RRCConnectionReconfigurationComplete_t;
+        else if(ret.Message_Type == "SgNBReconfigurationComplete")
+            return SgNBReconfigurationComplete_t;
+    }
+
     static SgNBAdditionalRequest getSgNBAdditionalRequest(QString json)
     {
         SgNBAdditionalRequest ret;
@@ -385,5 +427,25 @@ public:
         ret.MeNB_UE_X2AP_ID_Extension = jsonObject["MeNB_UE_X2AP_ID_Extension"].toString();
         return ret;
     }
+
+    static RRCConnectionReconfiguration getRRCConnectionReconfiguration(QString json)
+    {
+        RRCConnectionReconfiguration ret;
+        QJsonDocument jsonResponse = QJsonDocument::fromJson(json.toUtf8());
+        QJsonObject jsonObject = jsonResponse.object();
+        ret.Message_Type = jsonObject["Message_Type"].toString();
+        return ret;
+    }
+
+    static RRCConnectionReconfigurationComplete getRRCConnectionReconfigurationCompletee(QString json)
+    {
+        RRCConnectionReconfigurationComplete ret;
+        QJsonDocument jsonResponse = QJsonDocument::fromJson(json.toUtf8());
+        QJsonObject jsonObject = jsonResponse.object();
+        ret.Message_Type = jsonObject["Message_Type"].toString();
+        return ret;
+    }
+
+
 };
 #endif // MESSAGE_HPP
