@@ -29,7 +29,7 @@ void TcpServer::start_server()
     }
 }
 
-void TcpServer::write_message(QString msg)
+void TcpServer::write_message(const QString &msg)
 {
     if(socket)
     {
@@ -47,6 +47,9 @@ void TcpServer::onNewConnection()
 {
     socket = server->nextPendingConnection();
     connect(socket,&QTcpSocket::readyRead,this,&TcpServer::readSocket);
+    connect(socket,&QTcpSocket::disconnected, this,[this](){
+        emit client_disconnect(port);
+    });
     emit client_connected(port);
 }
 
@@ -60,7 +63,6 @@ void TcpServer::readSocket()
     {
         QString receiveString;
         in >> receiveString;
-        receiveString.prepend(QString("%1 :: ").arg(socket->socketDescriptor()));
         emit new_message(receiveString);
     }
 }

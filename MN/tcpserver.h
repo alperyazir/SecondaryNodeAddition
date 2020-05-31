@@ -15,7 +15,7 @@ public:
     explicit TcpServer(int port,QObject *parent = 0);
     ~TcpServer();
     void start_server();
-    void write_message(QString);
+    void write_message(const QString &);
 
     int getPort() const;
 
@@ -30,6 +30,7 @@ signals:
     void server_started(bool,int);
     void client_connected(int);
     void new_message(QString);
+    void client_disconnect(int);
 };
 
 #endif // TCPSERVER_H
