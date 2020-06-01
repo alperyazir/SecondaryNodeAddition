@@ -50,9 +50,12 @@ void TcpClient::readSocket()
 
 void TcpClient::discardSocket()
 {
+    qDebug() << "HERER DISCONNECTED";
+    emit disconnected_socket();
     tcpSocket->deleteLater();
     tcpSocket=nullptr;
-    emit disconnect();
+
+
 }
 
 void TcpClient::write_message(QString msg)

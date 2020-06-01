@@ -14,13 +14,17 @@ MainWindow::MainWindow(QWidget *parent)
     port_ue = 6626;
     ui->buttonStartSNA->setEnabled(false);
 
+
     create_server(port_sn);
     create_server(port_ue);
+
+
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+    qDeleteAll(servers);
 }
 
 QString MainWindow::get_time_stamp(TIMESTAMPCOLOR color)
@@ -63,20 +67,26 @@ void MainWindow::create_server(int port)
 {
 
     tcpServer = new TcpServer(port);
-    servers.push_back(tcpServer);
+
 
     connect(tcpServer,&TcpServer::server_started,this,[this](bool isStarted,int p){
         if(p == port_sn)
         {
             if(isStarted)
+            {
                 ui->textBrowser->append(get_time_stamp() + " Server Started for SN Communication Port: " + QString::number(p));
+                servers[0] = tcpServer;
+            }
             else
                 ui->textBrowser->append(get_time_stamp(RED) + " Failed to create server SN!!");
         }
         else if(p == port_ue)
         {
             if(isStarted)
+            {
                 ui->textBrowser->append(get_time_stamp() + " Server Started for UE Communication Port: " + QString::number(p));
+                servers[1] = tcpServer;
+            }
             else
                 ui->textBrowser->append(get_time_stamp(RED) + " Failed to create server UE!!");
         }
@@ -134,6 +144,8 @@ void MainWindow::create_server(int port)
             ui->textBrowser->append(get_time_stamp(ORANGE) + "Sending SgNBReconfigurationComplete message ");
             ui->textBrowser->append(doc.toJson().constData());
             servers.at(0)->write_message(doc.toJson().constData() );
+
+            ui->textBrowser-> append("\n=============================================================");
         }
     });
 

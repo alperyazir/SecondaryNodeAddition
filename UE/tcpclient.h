@@ -17,7 +17,7 @@ public:
 signals:
     void is_connected(bool);
     void new_message(QString);
-    void disconnected();
+    void disconnected_socket();
 private:
     QTcpSocket *tcpSocket;
 

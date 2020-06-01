@@ -35,10 +35,12 @@ MainWindow::MainWindow(QWidget *parent)
 
             QJsonDocument doc(obj.toJson());
             tcpClient->write_message(doc.toJson().constData() );
+
+            ui->textBrowser-> append("\n=============================================================");
         }
 
     });
-    connect(tcpClient, &TcpClient::disconnected,this,[this](){
+    connect(tcpClient, &TcpClient::disconnected_socket,this,[this](){
         ui->textBrowser->append(get_time_stamp(RED) + " Connection Lost");
     });
 

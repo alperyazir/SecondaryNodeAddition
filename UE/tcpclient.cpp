@@ -51,7 +51,7 @@ void TcpClient::discardSocket()
 {
     tcpSocket->deleteLater();
     tcpSocket=nullptr;
-    emit disconnect();
+    emit disconnected_socket();
 }
 
 void TcpClient::write_message(QString msg)

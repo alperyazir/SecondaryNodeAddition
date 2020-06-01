@@ -38,7 +38,7 @@ private:
     int port_sn;
     int port_ue;
 
-    QVector<TcpServer*> servers;
+    QVector<TcpServer*> servers{nullptr,nullptr};
 public slots:
 
 

@@ -10,7 +10,12 @@ TcpServer::TcpServer(int port, QObject *parent):
 
 TcpServer::~TcpServer()
 {
-///TODO
+    if(server->isListening())
+        server->close();
+    delete server;
+    if( socket->isOpen())
+        socket->abort();
+    delete socket;
 }
 
 void TcpServer::start_server()

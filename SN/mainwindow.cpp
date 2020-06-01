@@ -44,14 +44,15 @@ MainWindow::MainWindow(QWidget *parent)
             ui->textBrowser->append(get_time_stamp(GREEN) + " SgNBReconfigurationComplete message:");
             ui->textBrowser->append(msg);
             ui->textBrowser->append(get_time_stamp(GREEN) + " Procedure Complete Successfully!!!!");
+
+            ui->textBrowser-> append("\n=============================================================");
         }
 
         update();
     });
 
-    connect(tcpClient, &TcpClient::disconnected,this,[this](){
+    connect(tcpClient, &TcpClient::disconnected_socket,this,[this](){
         ui->textBrowser->append(get_time_stamp(RED) + " Connection Lost");
-        update();
 
     });
 
@@ -60,6 +61,7 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow()
 {
     delete ui;
+    delete tcpClient;
 }
 
 void MainWindow::on_buttonConnect_clicked()

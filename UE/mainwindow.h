@@ -31,7 +31,6 @@ private slots:
     void on_buttonConnect_clicked();
 
 
-
 private:
     Ui::MainWindow *ui;
     TcpClient *tcpClient = nullptr;
