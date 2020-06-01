@@ -61,7 +61,7 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow()
 {
     delete ui;
-    delete tcpClient;
+    delete tcpClient
 }
 
 void MainWindow::on_buttonConnect_clicked()
