@@ -24,7 +24,6 @@ MainWindow::MainWindow(QWidget *parent)
             ui->textBrowser->append(msg);
             RRCConnectionReconfiguration request = Message::getRRCConnectionReconfiguration(msg);
 
-            /// TODO adding operations.
             ui->textBrowser->append(get_time_stamp() + " Doing some stuff in UE ...");
             ui->textBrowser->append(get_time_stamp() + " Doing some other stuff in UE ...");
             ui->textBrowser->append(get_time_stamp(ORANGE) + " Sending RRCConnectionReconfigurationComplete message:");

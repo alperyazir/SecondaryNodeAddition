@@ -117,12 +117,11 @@ void MainWindow::create_server(int port)
 
             ui->textBrowser->append(get_time_stamp(GREEN) + "SgNBAdditionalRequestAcknowledge Message: ");
             ui->textBrowser->append(msg);
-            ///TODO adding features of the message
             ui->textBrowser->append(get_time_stamp() + "Doing some stuff here ...");
             ui->textBrowser->append(get_time_stamp() + "Doing some other stuff here ...");
             RRCConnectionReconfiguration request;
             request.Message_Type = "RRCConnectionReconfiguration";
-            // Add other informations for this request
+
             QJsonDocument doc(request.toJson());
             ui->textBrowser->append(get_time_stamp(ORANGE) + "Sending RRCConnectionReconfiguration message ");
             ui->textBrowser->append(doc.toJson().constData());

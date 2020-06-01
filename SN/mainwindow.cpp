@@ -27,7 +27,6 @@ MainWindow::MainWindow(QWidget *parent)
             ui->textBrowser->append(msg);
             SgNBAdditionalRequest request = Message::getSgNBAdditionalRequest(msg);
 
-            /// TODO adding operations.
             ui->textBrowser->append(get_time_stamp() + " Doing some stuff in SN ...");
             ui->textBrowser->append(get_time_stamp() + " Doing some other stuff in SN ...");
             ui->textBrowser->append(get_time_stamp(ORANGE) + " Sending SgNBAdditionalRequestAcknowledge message:");
